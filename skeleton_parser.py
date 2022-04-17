@@ -74,38 +74,32 @@ item in the data set. Your job is to extend this functionality to create all
 of the necessary SQL tables for your database.
 """
 def parseJson(json_file):
-    # make a list of all attributes
-    attr_list = ["ItemID", "Name", "Category", "Currently", "Buy_Price", "First_Bid", "Number_of_Bids", "Bids", "Location", "Country", "Started", "Ends", "Seller", "Description"]
-    # create tables
-    Item = open("Item.dat", 'w') 
+    Item = open("Item.dat", 'w')
     Auction = open("Auction.dat", 'w')
     Category = open("Category.dat", 'w')
     Bid = open("Bid.dat", 'w')
-    User = open("User.dat", 'w')
-    
+    Seller = open("Seller.dat", 'w')
+    Bidder = open("Bidder.dat", 'w')
     with open(json_file, 'r') as f:
         items = loads(f.read())['Items'] # creates a Python dictionary of Items for the supplied json file
         for item in items:
-        
-            for attr in attr_list:
-                #Item table
-                value = item.get(attr, "NULL")
-                if(value == None): value = "NULL"
-                if(attr == "ItemID" or attr == "Name"):
-                    Item.write(value + '|')
-                if(attr == "Seller"):
-                    Item.write(value["UserID"] + '|')
-                if(attr == "Description"):
-                    Item.write(value)
-                
-                #Bid table
-                if(attr == "Bids" and value != "NULL"):
-                    for bid in item["Bids"]:
-                        Bid.write(item["ItemID"]+'|'+bid["Bid"]["Bidder"]["UserID"]+'|'+transformDttm(bid["Bid"]["Time"])+'|'+transformDollar(bid["Bid"]["Amount"])+'\n')
-                        
-                #User table
-                #TDOO:
-            Item.write('\n')
+            Item.write(item["ItemID"]+'|'+'\"'+item["Name"]+'\"'+'|'+item["Seller"]["UserID"]+'|'+'\"'+str(item["Description"])+'\"'+'\n')
+            
+            value = item.get("Buy_Price")
+            Auction.write(item["ItemID"]+'|'+str(transformDollar(value))+'|'+transformDollar(item["Currently"])+'|'+transformDollar(item["First_Bid"])+'|'+item["Number_of_Bids"])
+            Auction.write('|'+transformDttm(item["Started"])+'|'+transformDttm(item["Ends"])+'\n')
+
+            for category in item["Category"]:
+                Category.write(item["ItemID"]+'|'+category+'\n')
+            
+            if(item.get("Bids")!= None):
+                for bid in item["Bids"]:
+                    Bid.write(item["ItemID"]+'|'+bid["Bid"]["Bidder"]["UserID"]+'|'+transformDttm(bid["Bid"]["Time"])+'|'+transformDollar(bid["Bid"]["Amount"])+'\n')
+                    Bidder.write(bid["Bid"]["Bidder"]["UserID"]+'|'+bid["Bid"]["Bidder"]["Rating"]+'|'+str(bid["Bid"]["Bidder"].get("Location"))+'|'+str(bid["Bid"]["Bidder"].get("Country"))+'\n')
+
+            Seller.write(item["Seller"]["UserID"]+'|'+item["Seller"]["Rating"]+'\n')
+
+
 
 """
 Loops through each json files provided on the command line and passes each file
