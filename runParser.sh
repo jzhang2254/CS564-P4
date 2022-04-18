@@ -1,5 +1,5 @@
 #!/bin/bash
-python skeleton_parser.py ebay_data/items-*.json
+python my_parser.py ebay_data/items-*.json
 sort -u Item.dat > Item_uniq.dat
 sort -u Seller.dat > Seller_uniq.dat
 sort -u Bidder.dat > Bidder_uniq.dat
