@@ -1,21 +1,24 @@
 .separator |
 .import Item_uniq.dat Item
-update Item set Name = null where Name = 'NULL';
-update Item set Description = null where Description = 'NULL';
+update Item set Name = null where Name = 'None';
+update Item set Description = null where Description = 'None';
 .import Auction_uniq.dat Auction
-update Auction set Buy_Price = null where Buy_Price ='NULL';
-update Auction set Currently = null where Currently ='NULL';
-update Auction set First_Bid = null where First_Bid ='NULL';
-update Auction set Number_of_Bids = null where Number_of_Bids ='NULL';
-update Auction set Started = null where Started ='NULL';
-update Auction set Ended = null where Ended = 'NULL';
-.import Person_uniq.dat Person
-update Person set Rating = null where Rating = 'NULL';
-update Person set Location = null where Location = 'NULL';
-update Person set Country = null where Country = 'NULL';
+update Auction set Buy_Price = null where Buy_Price ='None';
+update Auction set Currently = null where Currently ='None';
+update Auction set First_Bid = null where First_Bid ='None';
+update Auction set Number_of_Bids = null where Number_of_Bids ='None';
+update Auction set Started = null where Started ='None';
+update Auction set Ended = null where Ended = 'None';
+.import Seller_uniq.dat Seller
+update Seller set Rating = null where Rating = 'None';
+update Seller set Location = null where Location = 'None' or Location = 'Null' or Location = 'NULL' or Location = 'null';
+update Seller set Country = null where Country = 'None' or Location = 'Null' or Location = 'NULL' or Location = 'null';
+.import Bidder_uniq.dat Bidder
+update Bidder set Location = null where Location = 'None';
+update Bidder set Country = null where Country = 'None';
 .import Bid_uniq.dat Bid
-update Bid set Time = null where Time = 'NULL';
-update Bid set Amount = null where Amount = 'NULL';
+update Bid set Time = null where Time = 'None';
+update Bid set Amount = null where Amount = 'None';
 .import Category_uniq.dat Category
-update Category set CategoryName = null where CategoryName = 'NULL';
+update Category set CategoryName = null where CategoryName = 'None';
 
