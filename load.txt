@@ -11,8 +11,8 @@ update Auction set Started = null where Started ='None';
 update Auction set Ended = null where Ended = 'None';
 .import Seller_uniq.dat Seller
 update Seller set Rating = null where Rating = 'None';
-update Seller set Location = null where Location = 'None' or Location = 'Null' or Location = 'NULL' or Location = 'null';
-update Seller set Country = null where Country = 'None' or Location = 'Null' or Location = 'NULL' or Location = 'null';
+update Seller set Location = null where Location = 'None';
+update Seller set Country = null where Country = 'None';
 .import Bidder_uniq.dat Bidder
 update Bidder set Location = null where Location = 'None';
 update Bidder set Country = null where Country = 'None';
