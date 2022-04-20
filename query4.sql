@@ -1,0 +1,1 @@
+select ItemID from Auction where Currently = (select max(Currently) from Auction);
